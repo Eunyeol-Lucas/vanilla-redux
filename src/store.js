@@ -19,13 +19,25 @@ const deleteToDo = (id) => {
 
 // function reducer 생성
 const reducer = (state = [], action) => {
+  if (localStorage.length === 0) {
+    localStorage.setItem("toDos", JSON.stringify([]));
+  }
   switch (action.type) {
     case ADD:
+      const getStorageToDo = JSON.parse(localStorage.getItem("toDos"));
+      const addStorageToDo = getStorageToDo.concat({
+        text: action.text,
+        id: Date.now(),
+      });
+      localStorage.setItem("toDos", JSON.stringify(addStorageToDo));
       return [{ text: action.text, id: Date.now() }, ...state];
     case DELETE:
+      const todos = JSON.parse(localStorage.getItem("toDos"));
+      const deleteToDo = todos.filter((todo) => todo.id !== action.id);
+      localStorage.setItem("toDos", JSON.stringify(deleteToDo));
       return state.filter((toDo) => toDo.id !== action.id);
     default:
-      return state; 
+      return state;
   }
 };
 // store 생성 (createStore함수에 reducer를 매개변수로 넣음)
