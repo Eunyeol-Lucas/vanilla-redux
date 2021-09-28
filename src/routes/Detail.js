@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import { actionCreators } from "../store";
 import { useHistory } from "react-router";
 
@@ -10,10 +9,14 @@ const Detail = ({ toDo, onClickDelete }) => {
     <>
       <h1>{toDo?.text}</h1>
       <h5>Created at:{toDo?.id}</h5>
-          <button onClick={() => { onClickDelete(); history.push("/") }}>DEL</button>
-      <Link onClick={onClickDelete} to={"/"}>
+      <button
+        onClick={() => {
+          onClickDelete();
+          history.push("/");
+        }}
+      >
         DEL
-      </Link>
+      </button>
     </>
   );
 };
