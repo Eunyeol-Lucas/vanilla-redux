@@ -7,6 +7,7 @@ const Detail = ({ toDo, onClickDelete }) => {
   const history = useHistory();
   return (
     <>
+      {console.log(toDo)}
       <h1>{toDo?.text}</h1>
       <h5>Created at:{toDo?.id}</h5>
       <button
@@ -22,10 +23,14 @@ const Detail = ({ toDo, onClickDelete }) => {
 };
 
 function mapStateToProps(state, ownProps) {
-  state = JSON.parse(localStorage.getItem("toDos"));
-  const { id } = ownProps.match.params;
+    const { id } = ownProps.match.params;
   return { toDo: state.find((toDo) => toDo.id === parseInt(id)) };
 }
+// function mapStateToProps(state, ownProps) {
+//   // state = JSON.parse(localStorage.getItem("toDos"));
+//   const { id } = ownProps.match.params;
+//   return { toDo: state.find((toDo) => toDo.id === parseInt(id)) };
+// }
 
 function mapDispatchToProps(dispatch, ownProps) {
   const { id } = ownProps.match.params;

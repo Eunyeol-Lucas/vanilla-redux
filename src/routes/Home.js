@@ -32,7 +32,8 @@ const Home = ({ toDos, addToDo }) => {
 };
 
 function mapStateToProps(state) {
-  return { toDos: JSON.parse(localStorage.getItem("toDos")) };
+  // JSON.parse(localStorage.getItem("toDos"))
+  return { toDos: state };
 }
 
 function mapDispatchToProps(dispatch) {
