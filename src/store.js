@@ -1,21 +1,8 @@
 import { createStore } from "redux";
+import { createAction } from "@reduxjs/toolkit";
 
-const ADD = "ADD";
-const DELETE = "DELETE";
-
-// action creator
-const addTodo = (text) => {
-  return {
-    type: ADD,
-    text,
-  };
-};
-const deleteToDo = (id) => {
-  return {
-    type: DELETE,
-    id: parseInt(id),
-  };
-};
+const addToDo = createAction("ADD");
+const deleteToDo = createAction("DELETE");
 
 // function reducer 생성
 const reducer = (state = [], action) => {
@@ -23,18 +10,18 @@ const reducer = (state = [], action) => {
     localStorage.setItem("toDos", JSON.stringify([]));
   }
   switch (action.type) {
-    case ADD:
+    case addToDo.type:
       const getStorageToDo = JSON.parse(localStorage.getItem("toDos"));
       const addStorageToDo = getStorageToDo.concat({
-        text: action.text,
+        text: action.payload,
         id: Date.now(),
       });
       localStorage.setItem("toDos", JSON.stringify(addStorageToDo));
-      return [{ text: action.text, id: Date.now() }, ...state];
-    case DELETE:
+      return [{ text: action.payload, id: Date.now() }, ...state];
+    case deleteToDo.type:
       const todos = JSON.parse(localStorage.getItem("toDos"));
-      const deleteToDo = todos.filter((todo) => todo.id !== action.id);
-      localStorage.setItem("toDos", JSON.stringify(deleteToDo));
+      const deleteToDos = todos.filter((todo) => todo.id !== action.payload);
+      localStorage.setItem("toDos", JSON.stringify(deleteToDos));
       return state.filter((toDo) => toDo.id !== action.id);
     default:
       return state;
@@ -44,7 +31,7 @@ const reducer = (state = [], action) => {
 const store = createStore(reducer);
 
 export const actionCreators = {
-  addTodo,
+  addToDo,
   deleteToDo,
 };
 
